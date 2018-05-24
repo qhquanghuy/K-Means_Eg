@@ -24,16 +24,13 @@ public class Cluster {
     public DataPoint centroid() {
         
         double[] vector = new double[this.center.vector.length];
-        
+        int spaceSize = points.size();
         for (DataPoint point : points) {
             for (int i = 0; i < vector.length; i++) {
-                vector[i] += point.vector[i];
+                vector[i] += point.vector[i] / spaceSize;
             }
         }
-        for (int i = 0; i < vector.length; i++) {
-            vector[i] = vector[i] / points.size();
-        }
-        
+
         return new DataPoint(vector);
     }
     

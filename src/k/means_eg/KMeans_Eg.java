@@ -15,7 +15,6 @@ import java.io.IOException;
  */
 public class KMeans_Eg {
 
-    final static int k = 15;
     /**
      * @param args the command line arguments
      */
@@ -25,13 +24,16 @@ public class KMeans_Eg {
         DataPoint[] points = CSVParser.parseFile(fileName);
         
         
+        for (DataPoint point : points) {
+            point.zscore();
+        }
+        
         Cluster[] clusters = new KMeans()
                                     .maxLoops(5000)
-                                    .numberOfClusters(4)
+                                    .numberOfClusters(15)
                                     .distance(KMeans::euclidean)
                                     .runWith(points);
-        
-        System.out.println("done");
+                System.out.println("done");
         
         
         

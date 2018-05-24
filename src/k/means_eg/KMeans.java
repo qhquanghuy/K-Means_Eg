@@ -21,9 +21,7 @@ public class KMeans {
     private int k = 5;
     private int loops = 5000;
     Function<Pair<DataPoint, DataPoint>,Double> distance = KMeans::euclidean;// distance between 2 vector, apply to each dimension;
-    public KMeans() {
-        
-    }
+    public KMeans() {}
     
     public KMeans numberOfClusters(int k) {
         this.k = k;
