@@ -23,7 +23,7 @@ public class KMeans {
     Function<Pair<DataPoint, DataPoint>,Double> distance = KMeans::euclidean;// distance between 2 vector, apply to each dimension;
     public KMeans() {}
     
-    public KMeans numberOfClusters(int k) {
+    public KMeans clusters(int k) {
         this.k = k;
         return this;
     }
@@ -74,11 +74,9 @@ public class KMeans {
                 return clusters;
             }           
         }
-                
-        
         return clusters;
                 
-        
+         
     } 
     
     private void arrangePointToCluster(Cluster[] clusters, DataPoint[] points) {
@@ -88,13 +86,24 @@ public class KMeans {
             for (int idx = 0; idx < clusters.length; idx++) {
                 Cluster cluster = clusters[idx];
                 Double d = this.distance.apply(new Pair(cluster.center,point));
-
-                minDistance = minDistance.first > d ? new Pair(d,idx) : minDistance;
-                               
+                minDistance = minDistance.first > d ? new Pair(d,idx) : minDistance;             
             }
             clusters[minDistance.second].points.add(point);
         }
     }
+    
+    
+    public double sse(Cluster[] clusters) {
+        double sse = 0.0;
+        for (Cluster cluster : clusters) {
+            for (DataPoint point : cluster.points) {
+                double d = this.distance.apply(new Pair(point,cluster.center));
+                sse += d*d;
+            }
+        }
+        return sse;
+    }
+    
     
     
        

@@ -15,6 +15,19 @@ public class DataPoint {
     public DataPoint(double[] vector) {
         this.vector = vector;
     }  
+
+    @Override
+    public String toString() {
+        String s = new String();
+        
+        for (double d : vector) {
+            s += String.valueOf(d) + ", ";
+        }
+        
+        return s;
+    }
+    
+    
     
     
     public void zscore() {
@@ -27,6 +40,54 @@ public class DataPoint {
             }
         }
         
+    }
+    
+    public void unitLength() {
+        double len = this.euclideanLength();
+        for (int i = 0; i < this.vector.length; i++) {
+            this.vector[i] = this.vector[i] / len;
+        }
+    }
+    
+    public double euclideanLength() {
+        double len = 0.0;
+        for (int i = 0; i < this.vector.length; i++) {
+            len += this.vector[i] * this.vector[i];
+        }
+        return Math.sqrt(len);
+    }
+    
+    public void rescaling() {
+        double min = this.min();
+        double scale = this.max() - min;
+        
+        for (int i = 0; i < this.vector.length; i++) {
+            this.vector[i] = (this.vector[i] - min) / scale;
+        }
+    }
+    
+    public void meanNorm() {
+        double mean = this.mean();
+        double scale = this.max() - mean;
+        
+        for (int i = 0; i < this.vector.length; i++) {
+            this.vector[i] = (this.vector[i] - mean) / scale;
+        }
+    }
+    
+    public double min() {
+        double min = Double.MAX_VALUE;
+        for (int i = 0; i < this.vector.length; i++) {
+            min = min > this.vector[i] ? this.vector[i] : min;
+        }
+        return min;
+    }
+    public double max() {
+        double max = Double.MIN_VALUE;
+        for (int i = 0; i < this.vector.length; i++) {
+            max = max < this.vector[i] ? this.vector[i] : max;
+        }
+        return max;
     }
     
     public double mean() {

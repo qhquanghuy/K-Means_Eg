@@ -15,6 +15,18 @@ public class Cluster {
     public DataPoint center;
     public ArrayList<DataPoint> points;
 
+    @Override
+    public String toString() {
+        String s = center.toString();
+        for (int i = 0; i < this.points.size(); i++) {
+            s += "\n\t" + i + "---------" + this.points.get(i).toString();
+        }
+        return s;
+    }
+    
+    
+    
+
     public Cluster(DataPoint center) {
         this.center = center;
         this.points = new ArrayList<>();
